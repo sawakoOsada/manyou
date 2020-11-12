@@ -11,11 +11,11 @@
   <% end %>
   <div class="task_name">
     <%= f.label :name %>
-    <%= f.text_field :name %>
+    <%= f.text_field :name, id: 'タスク名' %>
   </div>
   <div class="task_content">
     <%= f.label :content %>
-    <%= f.text_field :content %>
+    <%= f.text_field :content, id: 'タスク詳細' %>
   </div>
   <%= f.submit %>
 <% end %>
