@@ -16,6 +16,7 @@ taskモデル
 2.コミットする
 
 `$ git add -A`
+
 `$ git commit -m "init"`
 
 3.Herokuに新しいアプリケーションを作成
