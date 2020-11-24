@@ -17,6 +17,10 @@
     <%= f.label :content %>
     <%= f.text_field :content, id: 'タスク詳細' %>
   </div>
+  <div class="task_deadline">
+    <%= f.label :deadline %>
+    <%= f.datetime_select :deadline, id: '終了期限' %>
+  </div>
   <%= f.submit %>
 <% end %>
 <%= link_to t('.task_index'), tasks_path %>
