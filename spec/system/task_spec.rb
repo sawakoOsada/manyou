@@ -10,9 +10,12 @@ RSpec.describe 'タスク管理機能', type: :system do
         visit new_task_path
         fill_in 'タスク名', with: 'task1'
         fill_in 'タスク詳細', with: 'content1'
+        #fill_in '終了期限', with: 'NOW()'
         click_on '登録する'
+        binding.pry
         expect(page).to have_content 'task1'
         expect(page).to have_content 'content1'
+        expect(page).to have_content 'NOW().strftime("%Y/%m/%d %H:%M:%S") '
       end
     end
   end
