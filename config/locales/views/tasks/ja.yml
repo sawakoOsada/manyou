@@ -1,0 +1,16 @@
+ja:
+  tasks:
+    index:
+      task_index: タスク一覧
+      name: タイトル
+      content: 内容
+      create: 作成
+      show: 詳細
+      edit: 編集
+      delete: 削除
+    form:
+      task_index: タスク一覧
+    show:
+      task_show: タスク詳細
+      name: タイトル
+      content: 内容
