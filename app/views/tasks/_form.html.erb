@@ -9,6 +9,7 @@
       </ul>
     </div>
   <% end %>
+
   <div class="task_name">
     <%= f.label :name %>
     <%= f.text_field :name, id: 'タスク名' %>
@@ -20,6 +21,9 @@
   <div class="task_deadline">
     <%= f.label :deadline %>
     <%= f.datetime_select :deadline, id: '終了期限' %>
+  </div>
+  <div class="task_state">
+    <%= f.select :state, Task.states.keys.to_a %>
   </div>
   <%= f.submit %>
 <% end %>

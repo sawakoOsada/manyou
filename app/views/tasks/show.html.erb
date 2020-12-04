@@ -2,3 +2,11 @@
 <p><%= t '.name' %>: <%= @task.name %></p>
 <p><%= t '.content' %>: <%= @task.content %></p>
 <p><%= @task.deadline.strftime("%Y/%m/%d %H:%M:%S") %></p>
+<p>state: <%= @task.state %></p>
+<%= form_with(model: @task, local: true) do |f| %>
+  <%= f.hidden_field :name %>
+  <%= f.hidden_field :content %>
+  <%= f.hidden_field :deadline %>
+  <%= f.select :state, Task.states.keys.to_a, selected: @task.state %>
+  <%= f.submit %>
+<% end %>

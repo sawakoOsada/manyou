@@ -1,11 +1,12 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :set_task, only: [:show, :edit, :update, :destroy, :toggle_state]
   def new
     @task = Task.new
   end
 
   def create
     @task = Task.new(task_params)
+
     if @task.save
       redirect_to tasks_path, notice:'作成しました'
     else
@@ -42,10 +43,10 @@ class TasksController < ApplicationController
 
   private
   def task_params
-    params.require(:task).permit(:name, :content, :deadline)
+    params.require(:task).permit(:name, :content, :deadline, :state)
   end
 
   def set_task
-    @task = Task.find(params[:id])
+    @task = Task.find(params[:id] || params[:task_id])
   end
 end
