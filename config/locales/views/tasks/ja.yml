@@ -8,6 +8,7 @@ ja:
       show: 詳細
       edit: 編集
       delete: 削除
+      submit: 検索する
     form:
       task_index: タスク一覧
     show:

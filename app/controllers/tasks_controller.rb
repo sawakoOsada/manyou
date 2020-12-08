@@ -17,8 +17,12 @@ class TasksController < ApplicationController
   def index
     if params[:sort_expired]
       @tasks = Task.all.order('deadline DESC')
-    elsif params[:search]
-      @tasks = Task.where(['name LIKE ?', "%#{params[:search]}%"])
+    elsif params[:name].present? && params[:state].present?
+      @tasks = Task.search_name("%#{params[:name]}%").search_state(params[:state])
+    elsif params[:name].present?
+      @tasks = Task.search_name("%#{params[:name]}%")
+    elsif params[:state].present?
+      @tasks = Task.search_state(params[:state])
     else
       @tasks = Task.all.order('created_at DESC')
     end
@@ -51,4 +55,5 @@ class TasksController < ApplicationController
   def set_task
     @task = Task.find(params[:id] || params[:task_id])
   end
+
 end
