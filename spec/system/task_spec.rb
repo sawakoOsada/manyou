@@ -1,7 +1,7 @@
 require 'rails_helper'
 RSpec.describe 'タスク管理機能', type: :system do
   let!(:task) { FactoryBot.create(:task) }
-  let!(:task2) { FactoryBot.create(:task, name: 'name_searched', state: 'start') }
+  let!(:task2) { FactoryBot.create(:task, name: 'name_searched', state: 'start', priority: 'high') }
   describe '新規作成機能' do
     context 'タスクを新規作成した場合' do
       it '作成したタスクが表示される' do
@@ -68,6 +68,15 @@ RSpec.describe 'タスク管理機能', type: :system do
         click_on '終了期限でソートする'
         task_list_desc = all('#task_row')
         expect(task_list_desc[0]).to have_content 'fast_name'
+      end
+    end
+    context '優先順位でソートするというリンクを押した場合' do
+      it '優先順位の高い順に表示される' do
+        low_task = FactoryBot.create(:task, name: 'name_low', content: 'content_low', priority: 'low')
+        visit tasks_path
+        click_on '優先順位でソートする'
+        task_list_desc = all('#task_row')
+        expect(task_list_desc[0]).to have_content 'name_searched'
       end
     end
   end

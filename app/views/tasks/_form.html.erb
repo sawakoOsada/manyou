@@ -25,6 +25,9 @@
   <div class="task_state">
     <%= f.select :state, Task.states.keys.to_a, id: 'ステータス' %>
   </div>
+  <div class="task_priority">
+    <%= f.select :priority, Task.priorities.keys.to_a, id: '優先順位' %>
+  </div>
   <%= f.submit %>
 <% end %>
 <%= link_to t('.task_index'), tasks_path %>
