@@ -5,4 +5,5 @@ class Task < ApplicationRecord
   enum priority:{low: 0, middle: 1, high: 2}
   scope :search_name, ->(name) { where(['name LIKE ?', name]) }
   scope :search_state, ->(status) { where(state: status) }
+  paginates_per 10
 end
