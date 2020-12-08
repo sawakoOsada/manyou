@@ -3,5 +3,6 @@ FactoryBot.define do
     name { 'test_name' }
     content { 'test_content' }
     deadline { Time.current }
+    state { 'wait' }
   end
 end

@@ -3,15 +3,15 @@
 <div class="search-form">
   <%= form_with(method: :get, local: true) do |f| %>
       <%= f.label :name %>
-      <%= f.text_field :name %>
+      <%= f.text_field :name, id:'タイトル検索' %>
       <%= f.select :state, [["wait", 0 ], ["start", 1], ["done", 2]], include_blank: "" %>
-      <%= f.submit %>
+      <%= f.submit t '.submit'%>
   <% end %>
 </div>
 
 <%= link_to "終了期限でソートする", tasks_path(sort_expired: "true") %>
 
-<table>
+<table class="task_table">
   <tr>
     <th><%= t '.name' %></th>
     <th><%= t '.content' %></th>
@@ -21,6 +21,7 @@
     <td><%= task.name %></td>
     <td><%= task.content %></td>
     <td><%= task.deadline.strftime("%Y/%m/%d %H:%M:%S")  %></td>
+    <td><%= task.state %></td>
     <td><%= link_to t('.show'), task_path(task.id) %></td>
     <td><%= link_to t('.edit'), edit_task_path(task.id) %></td>
     <td><%= link_to t('.delete'), task_path(task.id), method: :delete, data: { confirm: '本当に削除しますか？' } %></td>

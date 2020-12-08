@@ -23,7 +23,7 @@
     <%= f.datetime_select :deadline, id: '終了期限' %>
   </div>
   <div class="task_state">
-    <%= f.select :state, Task.states.keys.to_a %>
+    <%= f.select :state, Task.states.keys.to_a, id: 'ステータス' %>
   </div>
   <%= f.submit %>
 <% end %>
