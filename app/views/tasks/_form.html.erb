@@ -9,25 +9,32 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="task_name">
-    <%= f.label :name %>
-    <%= f.text_field :name, id: 'タスク名' %>
+  <table class="task_form">
+    <tr>
+      <th><%= f.label :name %></th>
+      <td><%= f.text_field :name, id: 'タスク名' %></td>
+    </tr>
+    <tr>
+      <th><%= f.label :content %></th>
+      <td><%= f.text_field :content, id: 'タスク詳細' %></td>
+    </tr>
+    <tr>
+      <th><%= f.label :deadline %></th>
+      <td><%= f.datetime_select :deadline, id: '終了期限' %></td>
+    </tr>
+    <tr>
+      <th><%= f.label :state %></th>
+      <td><%= f.select :state, Task.states.keys.to_a, id: 'ステータス' %></td>
+    </tr>
+    <tr>
+      <th><%= f.label :priority %></th>
+      <td><%= f.select :priority, Task.priorities.keys.to_a, id: '優先順位' %></td>
+    </tr>
+  </table>
+  <div class="action">
+    <%= f.submit %>
   </div>
-  <div class="task_content">
-    <%= f.label :content %>
-    <%= f.text_field :content, id: 'タスク詳細' %>
-  </div>
-  <div class="task_deadline">
-    <%= f.label :deadline %>
-    <%= f.datetime_select :deadline, id: '終了期限' %>
-  </div>
-  <div class="task_state">
-    <%= f.select :state, Task.states.keys.to_a, id: 'ステータス' %>
-  </div>
-  <div class="task_priority">
-    <%= f.select :priority, Task.priorities.keys.to_a, id: '優先順位' %>
-  </div>
-  <%= f.submit %>
 <% end %>
-<%= link_to t('.task_index'), tasks_path %>
+<div class="link">
+  <%= link_to t('.task_index'), tasks_path %>
+</div>

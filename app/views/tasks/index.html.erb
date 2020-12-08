@@ -1,37 +1,40 @@
-<h1><%= t '.task_index' %></h1>
+<h3><%= t '.task_index' %></h3>
 
-<div class="search-form">
+<div class="search_form">
   <%= form_with(method: :get, local: true) do |f| %>
-      <%= f.label :name %>
-      <%= f.text_field :name, id:'タイトル検索' %>
+      <%= t '.name' %>
+      <%= f.text_field :name, id:'タイトル検索', placeholder:"検索…"  %>
+      <%= f.label :state %>
       <%= f.select :state, [["wait", 0 ], ["start", 1], ["done", 2]], include_blank: "" %>
       <%= f.submit t '.submit'%>
   <% end %>
 </div>
 
-<%= link_to "終了期限でソートする", tasks_path(sort_expired: "true") %>
-<%= link_to "優先順位でソートする", tasks_path(sort_prioritized: "true") %>
-
-<table class="task_table">
-  <tr>
-    <th><%= t '.name' %></th>
-    <th><%= t '.content' %></th>
-    <th><%= t '.deadline' %></th>
-    <th><%= t '.state' %></th>
-    <th><%= t '.priority' %></th>
-  </tr>
-<% @tasks.each do |task| %>
-  <tr id="task_row">
-    <td><%= task.name %></td>
-    <td><%= task.content %></td>
-    <td><%= task.deadline.strftime("%Y/%m/%d %H:%M:%S")  %></td>
-    <td><%= task.state %></td>
-    <td><%= task.priority %></td>
-    <td><%= link_to t('.show'), task_path(task.id) %></td>
-    <td><%= link_to t('.edit'), edit_task_path(task.id) %></td>
-    <td><%= link_to t('.delete'), task_path(task.id), method: :delete, data: { confirm: '本当に削除しますか？' } %></td>
-  </tr>
-<% end %>
+<table class="task_table table">
+  <thead>
+    <tr>
+      <th><%= t '.name' %></th>
+      <th><%= t '.content' %></th>
+      <th><%= t '.deadline' %><%= link_to tasks_path(sort_expired: "true") do %><span class="glyphicon glyphicon-triangle-bottom"></span><% end %></th>
+      <th><%= t '.state' %></th>
+      <th><%= t '.priority' %><%= link_to tasks_path(sort_prioritized: "true") do %><span class="glyphicon glyphicon-triangle-bottom"></span><% end %></th>
+      <th></th><th></th><th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tasks.each do |task| %>
+      <tr id="task_row">
+        <td><%= task.name %></td>
+        <td><%= task.content %></td>
+        <td><%= task.deadline.strftime("%Y/%m/%d %H:%M:%S")  %></td>
+        <td><%= task.state %></td>
+        <td><%= task.priority %></td>
+        <td><%= link_to t('.show'), task_path(task.id) %></td>
+        <td><%= link_to t('.edit'), edit_task_path(task.id) %></td>
+        <td><%= link_to t('.delete'), task_path(task.id), method: :delete, data: { confirm: '本当に削除しますか？' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>
 <%= paginate @tasks %>
 <%= link_to t('.create'), new_task_path %>
