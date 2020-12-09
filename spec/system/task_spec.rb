@@ -65,7 +65,7 @@ RSpec.describe 'タスク管理機能', type: :system do
       it '終了期限の早いタスクが一番上に表示される' do
         fast_task = FactoryBot.create(:task, name: 'fast_name', content: 'fast_content', deadline: Time.zone.today - 1)
         visit tasks_path
-        find('soat_d').click
+        find('.soat_d').click
         task_list_desc = all('#task_row')
         expect(task_list_desc[0]).to have_content 'fast_name'
       end
@@ -74,7 +74,7 @@ RSpec.describe 'タスク管理機能', type: :system do
       it '優先順位の高い順に表示される' do
         low_task = FactoryBot.create(:task, name: 'name_low', content: 'content_low', priority: 'low')
         visit tasks_path
-        find('soat_p').click
+        find('.soat_p').click
         task_list_desc = all('#task_row')
         expect(task_list_desc[0]).to have_content 'name_searched'
       end
