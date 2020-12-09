@@ -21,7 +21,7 @@ RSpec.describe 'タスク管理機能', type: :system do
       it "検索キーワードを含むタスクで絞り込まれる" do
         visit tasks_path
         fill_in 'タイトル検索', with: 'searched'
-        click_on '検索する'
+        click_on '検索'
         expect(find('.task_table').text).to have_content 'name_searched'
       end
     end
@@ -29,7 +29,7 @@ RSpec.describe 'タスク管理機能', type: :system do
       it "ステータスに完全一致するタスクが絞り込まれる" do
         visit tasks_path
         find("option[value='1']").select_option
-        click_on '検索する'
+        click_on '検索'
         expect(find('.task_table').text).to have_content 'start'
         expect(find('.task_table').text).not_to have_content 'wait'
         expect(find('.task_table').text).not_to have_content 'done'
@@ -40,7 +40,7 @@ RSpec.describe 'タスク管理機能', type: :system do
         visit tasks_path
         fill_in 'タイトル検索', with: 'searched'
         find("option[value='1']").select_option
-        click_on '検索する'
+        click_on '検索'
         expect(find('.task_table').text).to have_content 'name_searched'
         expect(find('.task_table').text).to have_content 'start'
       end
@@ -65,7 +65,7 @@ RSpec.describe 'タスク管理機能', type: :system do
       it '終了期限の早いタスクが一番上に表示される' do
         fast_task = FactoryBot.create(:task, name: 'fast_name', content: 'fast_content', deadline: Time.zone.today - 1)
         visit tasks_path
-        click_on '終了期限でソートする'
+        find('soat_d').click
         task_list_desc = all('#task_row')
         expect(task_list_desc[0]).to have_content 'fast_name'
       end
@@ -74,7 +74,7 @@ RSpec.describe 'タスク管理機能', type: :system do
       it '優先順位の高い順に表示される' do
         low_task = FactoryBot.create(:task, name: 'name_low', content: 'content_low', priority: 'low')
         visit tasks_path
-        click_on '優先順位でソートする'
+        find('soat_p').click
         task_list_desc = all('#task_row')
         expect(task_list_desc[0]).to have_content 'name_searched'
       end
