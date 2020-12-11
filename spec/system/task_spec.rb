@@ -12,6 +12,7 @@ RSpec.describe 'タスク管理機能', type: :system do
         find_by_id('task_deadline_2i').select '12月'
         find_by_id('task_deadline_3i').select '3'
         find_by_id('task_state').select 'start'
+        find_by_id('task_priority').select 'high'
         click_on '登録する'
         expect(find('.task_table').text).to have_content 'task1'
         expect(find('.task_table').text).to have_content 'content1'
