@@ -6,6 +6,7 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
+
     if @task.save
       redirect_to tasks_path, notice:'作成しました'
     else
@@ -14,7 +15,19 @@ class TasksController < ApplicationController
   end
 
   def index
-    @tasks = Task.all.order("created_at DESC")
+    if params[:sort_expired]
+      @tasks = Task.all.order('deadline ASC').page(params[:page])
+    elsif params[:sort_prioritized]
+      @tasks = Task.all.order('priority DESC').page(params[:page])
+    elsif params[:name].present? && params[:state].present?
+      @tasks = Task.search_name("%#{params[:name]}%").search_state(params[:state]).page(params[:page])
+    elsif params[:name].present?
+      @tasks = Task.search_name("%#{params[:name]}%").page(params[:page])
+    elsif params[:state].present?
+      @tasks = Task.search_state(params[:state]).page(params[:page])
+    else
+      @tasks = Task.all.order('created_at DESC').page(params[:page])
+    end
   end
 
   def show
@@ -38,10 +51,11 @@ class TasksController < ApplicationController
 
   private
   def task_params
-    params.require(:task).permit(:name, :content)
+    params.require(:task).permit(:name, :content, :deadline, :state, :priority)
   end
 
   def set_task
-    @task = Task.find(params[:id])
+    @task = Task.find(params[:id] || params[:task_id])
   end
+
 end

@@ -1,3 +1,13 @@
 <h1><%= t '.task_show' %></h1>
 <p><%= t '.name' %>: <%= @task.name %></p>
 <p><%= t '.content' %>: <%= @task.content %></p>
+<p><%= @task.deadline.strftime("%Y/%m/%d %H:%M:%S") %></p>
+<p>priority: <%= @task.priority %></p>
+<%= form_with(model: @task, local: true) do |f| %>
+  <%= f.hidden_field :name %>
+  <%= f.hidden_field :content %>
+  <%= f.hidden_field :deadline %>
+  <%= f.select :state, Task.states.keys.to_a, selected: @task.state %>
+  <%= f.select :priority, Task.priorities.keys.to_a, selected: @task.priority %>
+  <%= f.submit %>
+<% end %>
