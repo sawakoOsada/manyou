@@ -10,17 +10,12 @@
   <% end %>
 </div>
 
-<div class="soat">
-  <%= link_to "終了期限でソートする", tasks_path(sort_expired: "true") %>
-  <%= link_to "優先順位でソートする", tasks_path(sort_prioritized: "true") %>
-</div>
-
 <table class="task_table table">
   <thead>
     <tr>
       <th><%= t '.name' %></th>
       <th><%= t '.content' %></th>
-      <th><%= t '.deadline' %><%= link_to(tasks_path(sort_expired: "true"), class: "soat_d") do %><i class="fas fa-sort-down fa-fw sort_deadline"></i><% end %></th>
+      <th><%= t '.deadline' %><%= link_to tasks_path(sort_expired: "true") do %><i class="fas fa-sort-down fa-fw sort_deadline"></i><% end %></th>
       <th><%= t '.state' %></th>
       <th><%= t '.priority' %><%= link_to tasks_path(sort_prioritized: "true") do %><i class="fas fa-sort-down fa-fw sort_priority"></i><% end %></th>
       <th></th><th></th><th></th>
