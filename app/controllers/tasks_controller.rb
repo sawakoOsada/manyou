@@ -1,4 +1,5 @@
 class TasksController < ApplicationController
+  before_action :authenticate_user
   before_action :set_task, only: [:show, :edit, :update, :destroy]
   def new
     @task = Task.new
@@ -30,8 +31,7 @@ class TasksController < ApplicationController
     end
   end
 
-  def show
-  end
+  def show; end
 
   def edit
   end
@@ -50,6 +50,7 @@ class TasksController < ApplicationController
   end
 
   private
+
   def task_params
     params.require(:task).permit(:name, :content, :deadline, :state, :priority)
   end
