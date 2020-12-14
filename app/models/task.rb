@@ -6,4 +6,5 @@ class Task < ApplicationRecord
   scope :search_name, ->(name) { where(['name LIKE ?', name]) }
   scope :search_state, ->(status) { where(state: status) }
   paginates_per 10
+  belongs_to :user
 end
