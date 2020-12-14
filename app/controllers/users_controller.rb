@@ -1,6 +1,10 @@
 class UsersController < ApplicationController
   def new
-    @user = User.new
+    if current_user.present?
+      redirect_to tasks_path, notice:'既にログインしています'
+    else
+      @user = User.new
+    end
   end
 
   def create
@@ -14,6 +18,9 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    if current_user != @user
+      redirect_to tasks_path, notice:'権限のないユーザーです'
+    end
   end
 
   private
