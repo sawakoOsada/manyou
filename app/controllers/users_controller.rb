@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   def new
-    if current_user.present?
+    if logged_in?
       redirect_to tasks_path, notice:'既にログインしています'
     else
       @user = User.new
@@ -10,7 +10,8 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      redirect_to user_path(@user.id)
+      log_in @user
+      redirect_to @user
     else
       render :new
     end
