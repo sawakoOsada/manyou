@@ -21,7 +21,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @tasks = @user.tasks
     if current_user != @user
-      redirect_to tasks_path, notice:'権限のないユーザーです' unless current_user.admin?
+      redirect_to tasks_path, notice:'権限のないユーザーです'
     end
   end
 

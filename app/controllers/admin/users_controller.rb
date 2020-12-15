@@ -18,6 +18,11 @@ class Admin::UsersController < ApplicationController
     @users = User.all.order(created_at: :desc)
   end
 
+  def show
+    @user = User.find(params[:id])
+    @tasks = @user.tasks
+  end
+
   def edit
   end
 
