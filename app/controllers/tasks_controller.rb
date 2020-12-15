@@ -17,7 +17,11 @@ class TasksController < ApplicationController
   end
 
   def index
-    @tasks = current_user.tasks.all.order('created_at DESC')
+    if current_user.admin?
+      @tasks = Task.all.order('created_at DESC')
+    else
+      @tasks = current_user.tasks.all.order('created_at DESC')
+    end
     if params[:sort_expired]
       @tasks = Task.all.order('deadline ASC')
     elsif params[:sort_prioritized]

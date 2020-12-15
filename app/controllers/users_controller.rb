@@ -1,17 +1,21 @@
 class UsersController < ApplicationController
   def new
-    if logged_in?
-      redirect_to tasks_path, notice:'既にログインしています'
-    else
+    if current_user.admin? || !logged_in?
       @user = User.new
+    else
+      redirect_to tasks_path, notice:'既にログインしています'
     end
   end
 
   def create
     @user = User.new(user_params)
     if @user.save
-      log_in @user
-      redirect_to @user
+      if current_user.admin?
+        redirect_to admin_users_path, notice: "ユーザーを作成しました"
+      else
+        log_in @user
+        redirect_to @user
+      end
     else
       render :new
     end
@@ -19,8 +23,9 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @tasks = @user.tasks
     if current_user != @user
-      redirect_to tasks_path, notice:'権限のないユーザーです'
+      redirect_to tasks_path, notice:'権限のないユーザーです' unless current_user.admin?
     end
   end
 

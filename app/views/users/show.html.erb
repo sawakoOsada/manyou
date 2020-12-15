@@ -1,2 +1,30 @@
 <h1><%= @user.name %>のページ</h1>
 <p>メールアドレス: <%= @user.email %></p>
+<% if current_user.admin? %>
+  <table class="task_table table">
+    <thead>
+      <tr>
+        <th><%= t '.name' %></th>
+        <th><%= t '.content' %></th>
+        <th><%= t '.deadline' %><%= link_to tasks_path(sort_expired: "true") do %><i class="fas fa-sort-down fa-fw sort_deadline"></i><% end %></th>
+        <th><%= t '.state' %></th>
+        <th><%= t '.priority' %><%= link_to tasks_path(sort_prioritized: "true") do %><i class="fas fa-sort-down fa-fw sort_priority"></i><% end %></th>
+        <th></th><th></th><th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @tasks.each do |task| %>
+        <tr id="task_row">
+          <td><%= task.name %></td>
+          <td><%= task.content %></td>
+          <td><%= task.deadline.strftime("%Y/%m/%d %H:%M:%S")  %></td>
+          <td><%= task.state %></td>
+          <td><%= task.priority %></td>
+          <td><%= link_to t('.show'), task_path(task.id) %></td>
+          <td><%= link_to t('.edit'), edit_task_path(task.id) %></td>
+          <td><%= link_to t('.delete'), task_path(task.id), method: :delete, data: { confirm: '本当に削除しますか？' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

@@ -68,7 +68,7 @@
   padding: 15px;
  }
  .top_menu li :hover {
-  background-color: #003399;
+  opacity: 0.5;
  }
  .clearfix:after {
   content: "";
