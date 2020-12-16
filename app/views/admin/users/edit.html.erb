@@ -3,5 +3,16 @@
   <%= f.text_field :name %>
   <%= f.label :email %>
   <%= f.text_field :email %>
-  <%= f.submit '送信する' %>
+  <% if @user.admin? %>
+    <%= f.radio_button :admin, :true, checked: true %>
+    <%= f.label :admin, "管理者", {value: :true, style: "display: inline-block;"} %>
+    <%= f.radio_button :admin, :false %>
+    <%= f.label :admin, "一般ユーザー", {value: :false, style: "display: inline-block;"} %>
+  <% else %>
+    <%= f.radio_button :admin, :true %>
+    <%= f.label :admin, "管理者", {value: :true, style: "display: inline-block;"} %>
+    <%= f.radio_button :admin, :false, checked: true %>
+    <%= f.label :admin, "一般ユーザー", {value: :false, style: "display: inline-block;"} %>
+  <% end %>
+  <%= f.submit '変更する' %>
 <% end %>

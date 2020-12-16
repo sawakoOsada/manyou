@@ -4,7 +4,7 @@
   <%= form_with(method: :get, local: true) do |f| %>
       <%= t '.name' %>
       <%= f.text_field :name, id:'タイトル検索', placeholder:"検索…"  %>
-      <%= f.label :state %>
+      <%= t '.state' %>
       <%= f.select :state, [["wait", 0 ], ["start", 1], ["done", 2]], include_blank: "" %>
       <%= f.submit t '.submit'%>
   <% end %>
