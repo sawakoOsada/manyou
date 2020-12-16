@@ -37,11 +37,11 @@
                 <%= link_to tasks_path do %><i class="fas fa-table"></i><% end %>
               </li>
               <li>
-                <%= link_to session_path(current_user.id), method: :delete do %><i class="fas fa-sign-out-alt"></i><% end %>
+                <%= link_to session_path(current_user.id), method: :delete do %><i class="fas fa-sign-out-alt logout_icon"></i><% end %>
               </li>
             <% else %>
               <li>
-                <%= link_to "Sign up", new_user_path %>
+                <%= link_to "Signup", new_user_path %>
               </li>
               <li>
                 <%= link_to "Login", new_session_path %>
