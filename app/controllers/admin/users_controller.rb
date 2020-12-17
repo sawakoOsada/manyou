@@ -15,7 +15,7 @@ class Admin::UsersController < ApplicationController
   end
 
   def index
-    @users = User.all.order(created_at: :desc)
+    @users = User.select(:id, :name, :created_at, :admin).order(created_at: :desc)
   end
 
   def show

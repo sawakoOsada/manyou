@@ -17,23 +17,19 @@ class TasksController < ApplicationController
   end
 
   def index
-    if current_user.admin?
-      @tasks = Task.all.order('created_at DESC')
-    else
-      @tasks = current_user.tasks.all.order('created_at DESC')
-    end
+    @tasks = Task.select(:id, :name, :content, :deadline, :state, :priority, :created_at).order('created_at DESC')
     if params[:sort_expired]
-      @tasks = Task.all.order('deadline ASC')
+      @tasks = current_user.tasks.order('deadline ASC')
     elsif params[:sort_prioritized]
-      @tasks = Task.all.order('priority DESC')
+      @tasks = current_user.tasks.order('priority DESC')
     elsif params[:name].present? && params[:state].present?
-      @tasks = Task.search_name("%#{params[:name]}%").search_state(params[:state])
+      @tasks = @tasks.search_name("%#{params[:name]}%").search_state(params[:state])
     elsif params[:name].present?
-      @tasks = Task.search_name("%#{params[:name]}%")
+      @tasks = @tasks.search_name("%#{params[:name]}%")
     elsif params[:state].present?
-      @tasks = Task.search_state(params[:state])
+      @tasks = @tasks.search_state(params[:state])
     else
-      @tasks = @tasks.all.order('created_at DESC')
+      @tasks = Task.select(:id, :name, :content, :deadline, :state, :priority, :created_at).order('created_at DESC')
     end
     @tasks = @tasks.page(params[:page])
   end
