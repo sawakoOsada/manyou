@@ -16,13 +16,13 @@ RSpec.describe 'ログイン機能', type: :system do
     end
     context '未ログイン状態でタスク一覧画面へ飛ぼうとした場合' do
       it 'ログイン画面に遷移する' do
-        visit tasks_path
-        expect(response).to redirect_to new_session_path
+        get tasks_url
+        expect(page).to redirect_to( new_session_url )
       end
     end
   end
 
-  describe 'セッション機能', type: :request do
+  describe 'セッション機能' do
     context 'ユーザーが登録されている場合' do
       it 'ログインができる' do
         signed_user = FactoryBot.create(:user, name: 'signed_user', email: 'sign@aaaa.com', password: 'aaaaaa')
@@ -46,8 +46,8 @@ RSpec.describe 'ログイン機能', type: :system do
       end
       it '他人の詳細画面に飛ぶとタスク一覧画面に遷移する' do
         another_user = FactoryBot.create(:user, name: 'another_user', email: 'another@aaaa.com', password: 'aaaaaa')
-        visit user_path(another_user.id)
-        expect(response).to redirect_to tasks_path
+        get user_url(another_user.id)
+        expect(page).to redirect_to(tasks_url)
       end
       it 'ログアウトができる' do
         find('.logout_icon').click
