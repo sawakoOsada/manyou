@@ -1,3 +1,4 @@
+require 'rails_helper'
 RSpec.describe 'ログイン機能', type: :system do
   let!(:user) {FactoryBot.create(:user, email: 'aaaa@aaaa.com', password: 'aaaaaa')}
 
@@ -21,7 +22,7 @@ RSpec.describe 'ログイン機能', type: :system do
     end
   end
 
-  describe 'セッション機能' do
+  describe 'セッション機能', type: :request do
     context 'ユーザーが登録されている場合' do
       it 'ログインができる' do
         signed_user = FactoryBot.create(:user, name: 'signed_user', email: 'sign@aaaa.com', password: 'aaaaaa')
