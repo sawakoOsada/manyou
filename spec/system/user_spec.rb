@@ -1,7 +1,7 @@
 require 'rails_helper'
 RSpec.describe 'ログイン機能', type: :system do
-  let!(:admin) {FactoryBot.create(:admin, email: 'admin@aaaa.com', password: 'aaaaaa')}
-  let!(:admined) {FactoryBot.create(:user, name: 'admined', email: 'admined@aaaa.com', password: 'aaaaaa')}
+  let!(:admin) {FactoryBot.create(:admin)}
+  let!(:admined) {FactoryBot.create(:user)}
 
   describe '新規登録機能' do
 
@@ -29,27 +29,26 @@ RSpec.describe 'ログイン機能', type: :system do
     context 'ユーザーが登録されている場合' do
       it 'ログインができる' do
         visit new_session_path
-        fill_in 'メールアドレス', with: 'admined@aaaa.com'
-        fill_in 'パスワード', with: 'aaaaaa'
+        fill_in 'メールアドレス', with: 'admined@test.com'
+        fill_in 'パスワード', with: 'admined_password'
         click_on 'Log in'
-        expect(page).to have_content 'adminedのページ'
+        expect(page).to have_content 'admined_userのページ'
       end
     end
 
     context 'ログインしている場合' do
       before do
-        visit root_path
-        fill_in 'メールアドレス', with: 'admined@aaaa.com'
-        fill_in 'パスワード', with: 'aaaaaa'
+        visit new_session_path
+        fill_in 'メールアドレス', with: 'admined@test.com'
+        fill_in 'パスワード', with: 'admined_password'
         click_on 'Log in'
       end
       it '自分の詳細画面に飛べる' do
         visit user_path(admined.id)
-        expect(page).to have_content 'adminedのページ'
+        expect(page).to have_content 'admined_userのページ'
       end
       it '他人の詳細画面に飛ぶとタスク一覧画面に遷移する' do
-        another_user = FactoryBot.create(:user, name: 'another_user', email: 'another@aaaa.com', password: 'aaaaaa')
-        get user_url(another_user.id)
+        get user_url(admin.id)
         expect(page).to redirect_to(tasks_url)
       end
       it 'ログアウトができる' do
@@ -63,9 +62,9 @@ RSpec.describe 'ログイン機能', type: :system do
 
     context '一般ユーザーの場合' do
       it '管理画面へアクセスするとタスク一覧ページへ飛ぶ' do
-        visit root_path
-        fill_in 'メールアドレス', with: 'admined@aaaa.com'
-        fill_in 'パスワード', with: 'aaaaaa'
+        visit new_session_path
+        fill_in 'メールアドレス', with: 'admined@test.com'
+        fill_in 'パスワード', with: 'admined_password'
         click_on 'Log in'
         get admin_users_url
         expect(page).to redirect_to( tasks_url )
@@ -75,20 +74,19 @@ RSpec.describe 'ログイン機能', type: :system do
     context '管理ユーザーの場合' do
 
       before do
-        visit root_path
-        fill_in 'メールアドレス', with: 'admin@aaaa.com'
-        fill_in 'パスワード', with: 'aaaaaa'
+        visit new_session_path
+        fill_in 'メールアドレス', with: 'admin@test.com'
+        fill_in 'パスワード', with: 'admin_password'
         click_on 'Log in'
       end
 
       it '管理画面にアクセスできる' do
-        binding.pry
         get admin_users_url
         expect(page).to redirect_to(admin_users_url)
       end
       it 'ユーザーの新規登録ができる' do
         visit new_admin_user_path
-        fill_in '名前', with: 'test_user'
+        fill_in 'ユーザー名', with: 'test_user'
         fill_in 'メールアドレス', with: 'test@example.com'
         fill_in 'パスワード', with: 'test_password'
         fill_in 'パスワードの確認', with: 'test_password'
@@ -101,7 +99,7 @@ RSpec.describe 'ログイン機能', type: :system do
       end
       it 'ユーザーの編集画面からユーザーを編集できる' do
         visit edit_admin_user_path(admined.id)
-        fill_in '名前', with: 'edited_user'
+        fill_in 'ユーザー名', with: 'edited_user'
         fill_in 'メールアドレス', with: 'edited@example.com'
         choose '管理者'
         click_on '変更する'

@@ -15,19 +15,19 @@
   <table>
     <tr>
       <th><%= f.label :name %></th>
-      <td><%= f.text_field :name %></td>
+      <td><%= f.text_field :name, id: 'ユーザー名' %></td>
     </tr>
     <tr>
       <th><%= f.label :email %></th>
-      <td><%= f.email_field :email %></td>
+      <td><%= f.email_field :email, id: 'メールアドレス' %></td>
     </tr>
     <tr>
       <th><%= f.label :password %></th>
-      <td><%= f.password_field :password %></td>
+      <td><%= f.password_field :password, id: 'パスワード' %></td>
     </tr>
     <tr>
       <th><%= f.label :password_confirmation %></th>
-      <td><%= f.password_field :password_confirmation %></td>
+      <td><%= f.password_field :password_confirmation, id: 'パスワードの確認' %></td>
     </tr>
   </table>
   <%= f.submit "Create account" %>

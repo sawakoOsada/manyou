@@ -1,6 +1,6 @@
 <%= form_with(model: @user, local: true, url: admin_user_path(@user)) do |f| %>
   <%= f.label :name %>
-  <%= f.text_field :name, id: '名前' %>
+  <%= f.text_field :name, id: 'ユーザー名' %>
   <%= f.label :email %>
   <%= f.text_field :email, id: 'メールアドレス' %>
   <% if @user.admin? %>

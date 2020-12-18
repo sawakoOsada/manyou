@@ -11,7 +11,7 @@ ja:
         state: ステータス
         priority: 優先順位
       user:
-        name: 名前
+        name: ユーザー名
         email: メールアドレス
         password: パスワード
         password_confirmation: パスワードの確認
