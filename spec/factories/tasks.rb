@@ -5,5 +5,6 @@ FactoryBot.define do
     deadline { Time.current }
     state { 'wait' }
     priority { 'low' }
+    user
   end
 end
