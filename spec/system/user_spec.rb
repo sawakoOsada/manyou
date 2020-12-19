@@ -1,7 +1,7 @@
 require 'rails_helper'
 RSpec.describe 'ログイン機能', type: :system do
   let!(:admin) {FactoryBot.create(:admin)}
-  let!(:admined) {FactoryBot.create(:user)}
+  let!(:user) {FactoryBot.create(:user)}
 
   describe '新規登録機能' do
 
@@ -29,23 +29,23 @@ RSpec.describe 'ログイン機能', type: :system do
     context 'ユーザーが登録されている場合' do
       it 'ログインができる' do
         visit new_session_path
-        fill_in 'メールアドレス', with: 'admined@test.com'
-        fill_in 'パスワード', with: 'admined_password'
+        fill_in 'メールアドレス', with: 'user@test.com'
+        fill_in 'パスワード', with: 'user_password'
         click_on 'Log in'
-        expect(page).to have_content 'admined_userのページ'
+        expect(page).to have_content 'common_userのページ'
       end
     end
 
     context 'ログインしている場合' do
       before do
         visit new_session_path
-        fill_in 'メールアドレス', with: 'admined@test.com'
-        fill_in 'パスワード', with: 'admined_password'
+        fill_in 'メールアドレス', with: 'user@test.com'
+        fill_in 'パスワード', with: 'user_password'
         click_on 'Log in'
       end
       it '自分の詳細画面に飛べる' do
         visit user_path(admined.id)
-        expect(page).to have_content 'admined_userのページ'
+        expect(page).to have_content 'common_userのページ'
       end
       it '他人の詳細画面に飛ぶとタスク一覧画面に遷移する' do
         visit user_path(admin.id)
@@ -63,8 +63,8 @@ RSpec.describe 'ログイン機能', type: :system do
     context '一般ユーザーの場合' do
       it '管理画面へアクセスするとタスク一覧ページへ飛ぶ' do
         visit new_session_path
-        fill_in 'メールアドレス', with: 'admined@test.com'
-        fill_in 'パスワード', with: 'admined_password'
+        fill_in 'メールアドレス', with: 'user@test.com'
+        fill_in 'パスワード', with: 'user_password'
         click_on 'Log in'
         visit admin_users_path
         expect(page).to have_content 'タスク一覧'
@@ -95,7 +95,7 @@ RSpec.describe 'ログイン機能', type: :system do
       end
       it 'ユーザーの詳細画面にアクセスできる' do
         visit admin_user_path(admined.id)
-        expect(page).to have_content 'admined_userのページ'
+        expect(page).to have_content 'common_userのページ'
       end
       it 'ユーザーの編集画面からユーザーを編集できる' do
         visit edit_admin_user_path(admined.id)

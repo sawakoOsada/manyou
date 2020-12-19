@@ -9,7 +9,10 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    if @user.save
+    if User.where(email: @user.email).count >= 1
+      flash[:notice] = '既に登録されているメールアドレスです'
+      render :new
+    elsif @user.save
       log_in @user
       redirect_to @user
     else
@@ -19,10 +22,8 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    redirect_to tasks_path, notice:'権限のないユーザーです' if current_user != @user
     @tasks = @user.tasks
-    if current_user != @user
-      redirect_to tasks_path, notice:'権限のないユーザーです'
-    end
   end
 
   private

@@ -1,14 +1,18 @@
 class Admin::UsersController < ApplicationController
-  before_action :admin_user
-  before_action :set_user, only: [:edit, :update, :destroy]
+  before_action :require_admin_user
+  before_action :set_user, only: [:edit, :update, :destroy, :show]
+
   def new
     @user = User.new
   end
 
   def create
     @user = User.new(user_params)
-    if @user.save
-      redirect_to admin_users_path, notice: "ユーザーを作成しました"
+    if User.where(email: @user.email).count >= 1
+      flash[:notice] = '既に登録されているメールアドレスです'
+      render :new
+    elsif @user.save
+      redirect_to admin_users_path, notice: 'ユーザーを作成しました'
     else
       render :new
     end
@@ -19,12 +23,10 @@ class Admin::UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
     @tasks = @user.tasks
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @user.update(user_params)
@@ -40,7 +42,7 @@ class Admin::UsersController < ApplicationController
   end
 
   private
-  def admin_user
+  def require_admin_user
     unless current_user.admin?
       redirect_to(root_url)
       flash[:notice] = '権限のないユーザーです'

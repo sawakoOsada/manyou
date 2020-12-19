@@ -11,6 +11,7 @@ class User < ApplicationRecord
   private
   def not_destroy_last_admin
     return unless self.admin?
+    
     if User.where(admin: true).count <= 1
       throw(:abort)
     end

@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :user do
-    name { "admined_user" }
-    sequence(:email) { "admined@test.com" }
-    password { "admined_password" }
+    name { "common_user" }
+    sequence(:email) { "user@test.com" }
+    password { "user_password" }
     admin { false }
   end
   factory :admin, class: User do
