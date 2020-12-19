@@ -7,10 +7,58 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
   </head>
 
   <body>
-    <p><%= notice %></p>
-    <%= yield %>
+    <div class="container">
+      <header class="header clearfix">
+        <div class="top">
+          <%= link_to "TASKE", root_path %>
+        </div>
+        <nav>
+          <ul class="top_menu clearfix">
+            <% if logged_in? %>
+              <li>
+                <%= link_to current_user.name, user_path(current_user.id) %>
+              </li>
+              <% if current_user.admin? %>
+                <li>
+                  <%= link_to admin_users_path do %><i class="fas fa-user-edit"></i><% end %>
+                </li>
+              <% end %>
+              <li>
+                <%= link_to root_path do %><i class="fas fa-home"></i><% end %>
+              </li>
+              <li>
+                <%= link_to new_task_path do %><i class="fas fa-plus"></i><% end %>
+              </li>
+              <li>
+                <%= link_to tasks_path do %><i class="fas fa-table"></i><% end %>
+              </li>
+              <li>
+                <%= link_to session_path(current_user.id), method: :delete do %><i class="fas fa-sign-out-alt logout_icon"></i><% end %>
+              </li>
+            <% else %>
+              <li>
+                <%= link_to "Signup", new_user_path %>
+              </li>
+              <li>
+                <%= link_to "Login", new_session_path %>
+              </li>
+            <% end %>
+          </ul>
+        </nav>
+      </header>
+      <div class="content_box">
+        <% flash.each do |key, value| %>
+          <%= content_tag(:div, value, class: "#{key}") %>
+        <% end %>
+        <%= yield %>
+        </div>
+    <footer>
+      <p>© 2020 TASKE</p>
+    </footer>
+    </div>
   </body>
 </html>

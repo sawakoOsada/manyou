@@ -4,13 +4,24 @@ ja:
       task_index: タスク一覧
       name: タイトル
       content: 内容
+      deadline: 終了期限
+      state: ステータス
+      priority: 優先順位
       create: 作成
       show: 詳細
       edit: 編集
       delete: 削除
+      submit: 検索
     form:
       task_index: タスク一覧
     show:
       task_show: タスク詳細
       name: タイトル
       content: 内容
+      deadline: 終了期限
+      state: ステータス
+      priority: 優先順位
+  sessions:
+    new:
+      email: メールアドレス
+      password: パスワード
