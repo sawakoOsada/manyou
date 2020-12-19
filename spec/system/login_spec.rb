@@ -5,7 +5,6 @@ RSpec.describe 'ログイン機能', type: :system do
 
   describe 'ログイン機能' do
 
-
     context 'ログインした場合' do
       it 'current_userに値が入る' do
         visit new_session_path

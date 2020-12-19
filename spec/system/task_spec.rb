@@ -1,14 +1,14 @@
 require 'rails_helper'
 RSpec.describe 'タスク管理機能', type: :system do
 
-  let!(:user) {FactoryBot.create(:user, email: 'aaaa@aaaa.com', password: 'aaaaaa')}
+  let!(:user) {FactoryBot.create(:user)}
   let!(:task) { FactoryBot.create(:task, user: user) }
   let!(:task2) { FactoryBot.create(:task, name: 'name_searched', state: 'start', priority: 'high', user: user) }
 
   before do
     visit root_path
-    fill_in 'メールアドレス', with: 'aaaa@aaaa.com'
-    fill_in 'パスワード', with: 'aaaaaa'
+    fill_in 'メールアドレス', with: 'admined@test.com'
+    fill_in 'パスワード', with: 'admined_password'
     click_on 'Log in'
   end
 
@@ -84,7 +84,7 @@ RSpec.describe 'タスク管理機能', type: :system do
     end
     context '優先順位でソートするリンクを押した場合' do
       it '優先順位の高い順に表示される' do
-        low_task = FactoryBot.create(:task, name: 'name_low', content: 'content_low', priority: 'low')
+        low_task = FactoryBot.create(:task, name: 'name_low', content: 'content_low', priority: 'low', user: user)
         visit tasks_path
         find('.sort_priority').click
         task_list_desc = all('#task_row')

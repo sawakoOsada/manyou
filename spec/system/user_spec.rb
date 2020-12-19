@@ -19,8 +19,8 @@ RSpec.describe 'ログイン機能', type: :system do
 
     context '未ログイン状態でタスク一覧画面へ飛ぼうとした場合' do
       it 'ログイン画面に遷移する' do
-        get tasks_url
-        expect(page).to redirect_to( new_session_url )
+        visit tasks_path
+        expect(page).to have_content 'ログインしてください'
       end
     end
   end
@@ -48,8 +48,8 @@ RSpec.describe 'ログイン機能', type: :system do
         expect(page).to have_content 'admined_userのページ'
       end
       it '他人の詳細画面に飛ぶとタスク一覧画面に遷移する' do
-        get user_url(admin.id)
-        expect(page).to redirect_to(tasks_url)
+        visit user_path(admin.id)
+        expect(page).to have_content 'タスク一覧'
       end
       it 'ログアウトができる' do
         find('.logout_icon').click
@@ -66,8 +66,8 @@ RSpec.describe 'ログイン機能', type: :system do
         fill_in 'メールアドレス', with: 'admined@test.com'
         fill_in 'パスワード', with: 'admined_password'
         click_on 'Log in'
-        get admin_users_url
-        expect(page).to redirect_to( tasks_url )
+        visit admin_users_path
+        expect(page).to have_content 'タスク一覧'
       end
     end
 
@@ -81,8 +81,8 @@ RSpec.describe 'ログイン機能', type: :system do
       end
 
       it '管理画面にアクセスできる' do
-        get admin_users_url
-        expect(page).to redirect_to(admin_users_url)
+        visit admin_users_path
+        expect(page).to have_content 'ユーザー一覧'
       end
       it 'ユーザーの新規登録ができる' do
         visit new_admin_user_path
@@ -94,8 +94,8 @@ RSpec.describe 'ログイン機能', type: :system do
         expect(page).to have_content 'ユーザーを作成しました'
       end
       it 'ユーザーの詳細画面にアクセスできる' do
-        get admin_users_url(admined.id)
-        expect(page).to redirect_to(admin_users_url(admined.id))
+        visit admin_user_path(admined.id)
+        expect(page).to have_content 'admined_userのページ'
       end
       it 'ユーザーの編集画面からユーザーを編集できる' do
         visit edit_admin_user_path(admined.id)
