@@ -7,4 +7,6 @@ class Task < ApplicationRecord
   scope :search_state, ->(status) { where(state: status) }
   paginates_per 10
   belongs_to :user
+  has_many :labellings, dependent: :destroy
+  has_many :labels, through: :labellings
 end
