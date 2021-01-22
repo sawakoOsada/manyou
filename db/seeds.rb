@@ -8,19 +8,18 @@ User.create!(name:  "管理者",
   name = Faker::Games::Pokemon.name
   email = Faker::Internet.email
   password = "password"
-  user = User.create!(
-               id: n+3,
+  User.create!(
+               id: n+2,
                name: name,
                email: email,
                password: password,
                password_confirmation: password,
                )
-               puts user.name
 end
 10.times do |n|
   name = Faker::Games::Pokemon.name
   content = Faker::Games::Pokemon.name
-  user = User.find(n+3)
+  user = User.find(n+2)
   Task.create!(name: name,
                content: content,
                user: user
