@@ -9,7 +9,6 @@ User.create!(name:  "管理者",
   email = Faker::Internet.email
   password = "password"
   User.create!(
-               id: n+2,
                name: name,
                email: email,
                password: password,
@@ -19,7 +18,7 @@ end
 10.times do |n|
   name = Faker::Games::Pokemon.name
   content = Faker::Games::Pokemon.name
-  user = User.find(n+2)
+  user = User.find(n+1)
   Task.create!(name: name,
                content: content,
                user: user
