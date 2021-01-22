@@ -24,7 +24,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.8'
   gem 'spring-commands-rspec'
   gem 'factory_bot_rails'
-  gem 'faker'
+  # gem 'faker'
   gem 'launchy'
   gem 'seed-fu'
 end
