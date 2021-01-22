@@ -12,7 +12,6 @@
   <h5>ラベルで検索</h5>
   <%= form_with url: tasks_path, method: :get, local: true do |f| %>
   <%= t '.label' %>
-    <%# <%= f.select("label_id", Label.pluck(:name, :id), { include_blank: true }) %> %>
   <%= f.select :label, [["仕事", 1 ], ["趣味", 2], ["家事", 3]], include_blank: "" %>
   <%= f.submit 'Search', name: nil %>
 <% end %>
