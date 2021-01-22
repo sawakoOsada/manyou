@@ -105,6 +105,10 @@
 .search_form select{
   margin: 10px;
 }
+.search_form h5{
+  color: rgb(150, 90, 80);
+  padding-top: 10px;
+}
 .task_table{
   border-top: 1px solid silver;
 }

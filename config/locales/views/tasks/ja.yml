@@ -7,6 +7,7 @@ ja:
       deadline: 終了期限
       state: ステータス
       priority: 優先順位
+      label: ラベル
       create: 作成
       show: 詳細
       edit: 編集
