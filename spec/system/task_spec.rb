@@ -4,11 +4,15 @@ RSpec.describe 'タスク管理機能', type: :system do
   let!(:user) {FactoryBot.create(:user)}
   let!(:task) { FactoryBot.create(:task, user: user) }
   let!(:task2) { FactoryBot.create(:task, name: 'name_searched', state: 'start', priority: 'high', user: user) }
+  let!(:label) {FactoryBot.create(:label)}
+  let!(:label2) {FactoryBot.create(:label, name: '趣味', id: 2)}
+  let!(:label3) {FactoryBot.create(:label, name: '家事', id: 3)}
+  let!(:labelling) { FactoryBot.create(:labelling, task: task2, label: label) }
 
   before do
     visit root_path
-    fill_in 'メールアドレス', with: 'admined@test.com'
-    fill_in 'パスワード', with: 'admined_password'
+    fill_in 'メールアドレス', with: 'user@test.com'
+    fill_in 'パスワード', with: 'user_password'
     click_on 'Log in'
   end
 
@@ -23,9 +27,21 @@ RSpec.describe 'タスク管理機能', type: :system do
         find_by_id('task_deadline_3i').select '3'
         find_by_id('task_state').select 'start'
         find_by_id('task_priority').select 'high'
+        check '仕事'
         click_on '登録する'
         expect(find('.task_table').text).to have_content 'task1'
         expect(find('.task_table').text).to have_content 'content1'
+      end
+      it "複数ラベルを付けられる" do
+        visit new_task_path
+        fill_in 'タスク名', with: 'task2'
+        fill_in 'タスク詳細', with: 'content2'
+        check '仕事'
+        check '趣味'
+        check '家事'
+        click_on '登録する'
+        expect(find('.task_table').text).to have_content 'task2'
+        expect(find('.task_table').text).to have_content 'content2'
       end
     end
     context 'タイトルであいまい検索をした場合' do
@@ -39,7 +55,7 @@ RSpec.describe 'タスク管理機能', type: :system do
     context 'ステータス検索をした場合' do
       it "ステータスに完全一致するタスクが絞り込まれる" do
         visit tasks_path
-        find("option[value='1']").select_option
+        find("#state").find("option[value='1']").select_option
         click_on '検索'
         expect(find('.task_table').text).to have_content 'start'
         expect(find('.task_table').text).not_to have_content 'wait'
@@ -50,10 +66,18 @@ RSpec.describe 'タスク管理機能', type: :system do
       it "検索キーワードをタイトルに含み、かつステータスに完全一致するタスク絞り込まれる" do
         visit tasks_path
         fill_in 'タイトル検索', with: 'searched'
-        find("option[value='1']").select_option
+        find("#state").find("option[value='1']").select_option
         click_on '検索'
         expect(find('.task_table').text).to have_content 'name_searched'
         expect(find('.task_table').text).to have_content 'start'
+      end
+    end
+    context 'ラベル検索をした場合' do
+      it "ラベル名に完全一致するタスクが絞り込まれる" do
+        visit tasks_path
+        find("#label").find("option[value='1']").select_option
+        click_on 'Search'
+        expect(find('.task_table').text).to have_content '仕事'
       end
     end
   end

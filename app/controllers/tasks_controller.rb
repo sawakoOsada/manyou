@@ -28,6 +28,8 @@ class TasksController < ApplicationController
       @tasks = @tasks.search_name("%#{params[:name]}%")
     elsif params[:state].present?
       @tasks = @tasks.search_state(params[:state])
+    elsif params[:label]
+      @tasks = @tasks.joins(:labels).where(labels: { id: params[:label] })
     else
       @tasks = Task.select(:id, :name, :content, :deadline, :state, :priority, :created_at).order('created_at DESC')
     end
@@ -54,7 +56,7 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:name, :content, :deadline, :state, :priority)
+    params.require(:task).permit(:name, :content, :deadline, :state, :priority, label_ids: [] )
   end
 
   def set_task

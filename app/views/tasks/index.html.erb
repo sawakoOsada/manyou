@@ -1,6 +1,7 @@
 <h3><%= t '.task_index' %></h3>
 
 <div class="search_form">
+  <h5>タイトル・ステータスで検索</h5>
   <%= form_with(method: :get, local: true) do |f| %>
       <%= t '.name' %>
       <%= f.text_field :name, id:'タイトル検索', placeholder:"検索…"  %>
@@ -8,6 +9,12 @@
       <%= f.select :state, [["wait", 0 ], ["start", 1], ["done", 2]], include_blank: "" %>
       <%= f.submit t '.submit'%>
   <% end %>
+  <h5>ラベルで検索</h5>
+  <%= form_with url: tasks_path, method: :get, local: true do |f| %>
+  <%= t '.label' %>
+  <%= f.select :label, [["仕事", 1 ], ["趣味", 2], ["家事", 3]], include_blank: "" %>
+  <%= f.submit 'Search', name: nil %>
+<% end %>
 </div>
 
 <table class="task_table table">
@@ -29,6 +36,11 @@
         <td><%= task.deadline.strftime("%Y/%m/%d %H:%M:%S")  %></td>
         <td><%= task.state %></td>
         <td><%= task.priority %></td>
+        <td>
+          <% task.labels.each do |label| %>
+          <%= label.name %>
+          <% end %>
+        </td>
         <td><%= link_to t('.show'), task_path(task.id) %></td>
         <td><%= link_to t('.edit'), edit_task_path(task.id) %></td>
         <td><%= link_to t('.delete'), task_path(task.id), method: :delete, data: { confirm: '本当に削除しますか？' } %></td>

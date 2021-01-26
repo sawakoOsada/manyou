@@ -44,7 +44,7 @@ RSpec.describe 'ログイン機能', type: :system do
         click_on 'Log in'
       end
       it '自分の詳細画面に飛べる' do
-        visit user_path(admined.id)
+        visit user_path(user.id)
         expect(page).to have_content 'common_userのページ'
       end
       it '他人の詳細画面に飛ぶとタスク一覧画面に遷移する' do
@@ -94,11 +94,11 @@ RSpec.describe 'ログイン機能', type: :system do
         expect(page).to have_content 'ユーザーを作成しました'
       end
       it 'ユーザーの詳細画面にアクセスできる' do
-        visit admin_user_path(admined.id)
+        visit admin_user_path(user.id)
         expect(page).to have_content 'common_userのページ'
       end
       it 'ユーザーの編集画面からユーザーを編集できる' do
-        visit edit_admin_user_path(admined.id)
+        visit edit_admin_user_path(user.id)
         fill_in 'ユーザー名', with: 'edited_user'
         fill_in 'メールアドレス', with: 'edited@example.com'
         choose '管理者'
